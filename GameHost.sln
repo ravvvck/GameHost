@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameHost.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameHost.Api", "GameHost.Api\GameHost.Api.csproj", "{0672FAD4-EA92-4D20-99AC-33C3A0610435}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{19AD2BC6-593C-4952-9C43-E928C6F9478A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0EB08EA9-D07F-4FB7-8BA4-58F083DDEE8F} = {19AD2BC6-593C-4952-9C43-E928C6F9478A}
+		{3D1B1298-830F-4925-97B2-0C37152326AA} = {19AD2BC6-593C-4952-9C43-E928C6F9478A}
+		{C352EC12-2374-4517-8962-5CB3EED6D6AB} = {19AD2BC6-593C-4952-9C43-E928C6F9478A}
+		{DB6B78C9-1E59-43D0-9812-9564084D6900} = {19AD2BC6-593C-4952-9C43-E928C6F9478A}
+		{0672FAD4-EA92-4D20-99AC-33C3A0610435} = {19AD2BC6-593C-4952-9C43-E928C6F9478A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3213D3EF-5206-4731-B619-8AD37B5AF585}
