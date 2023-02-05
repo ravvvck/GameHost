@@ -1,5 +1,5 @@
-﻿using GameHost.Contracts.Events;
-using GameHost.Domain.Event;
+﻿using GameHost.Domain.Session;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace GameHost.Application.Common.Interfaces.Persistence
 {
-    public interface IEventRepository
+    public interface ISessionRepository
     {
-        List<Event> GetAllEvents();
-        void Add(Event e);
+        void Add(Session e);
     }
 }
