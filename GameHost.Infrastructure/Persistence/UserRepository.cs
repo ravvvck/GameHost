@@ -1,5 +1,5 @@
 ﻿using GameHost.Application.Common.Interfaces.Persistence;
-using GameHost.Domain.Entities;
+using GameHost.Domain.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;

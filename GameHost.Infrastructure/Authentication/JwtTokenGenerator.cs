@@ -1,6 +1,6 @@
 ﻿using GameHost.Application.Common.Authentication;
 using GameHost.Application.Common.Interfaces.Services;
-using GameHost.Domain.Entities;
+using GameHost.Domain.User;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;

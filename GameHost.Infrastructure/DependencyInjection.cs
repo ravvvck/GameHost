@@ -26,7 +26,7 @@ namespace GameHost.Infrastructure
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<ISessionRepository, SessionRepository>();
 
 
             //services.AddDbContext<GameHostDbContext>(options => options.UseSqlServer());
