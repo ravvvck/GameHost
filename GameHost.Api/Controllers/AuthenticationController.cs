@@ -26,12 +26,8 @@ namespace GameHost.Api.Controllers
             var command = _mapper.Map<RegisterCommand>(registerRequest);
             
             var authResult = await _mediator.Send(command);
-            var response = new AuthenticationResponse(
-                authResult.user.Id,
-                authResult.user.FirstName,
-                authResult.user.LastName,
-                authResult.user.Email,
-                authResult.Token);
+            var response = _mapper.Map<AuthenticationResponse>(authResult);
+            
             return Ok(response);
         }
 
@@ -39,13 +35,8 @@ namespace GameHost.Api.Controllers
         public async Task<IActionResult> Login(LoginRequest loginRequest )
         {
             var query = _mapper.Map<LoginQuery>(loginRequest);
-            var authResult = await _mediator.Send(query);
-            var response = new AuthenticationResponse(
-                authResult.user.Id,
-                authResult.user.FirstName,
-                authResult.user.LastName,
-                authResult.user.Email,
-                authResult.Token);
+            var authResult = await _mediator.Send(query); //dziala
+            var response = _mapper.Map<AuthenticationResponse>(authResult);
             return Ok(response);
         }
     
