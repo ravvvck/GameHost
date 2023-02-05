@@ -1,6 +1,5 @@
 ﻿using GameHost.Domain.Common.Models;
 using GameHost.Domain.Common.ValueObjects;
-using GameHost.Domain.Event.ValueObjects;
 using GameHost.Domain.Session.ValueObjects;
 using GameHost.Domain.User.ValueObjects;
 using System;
@@ -27,9 +26,9 @@ namespace GameHost.Domain.Host
             
         }
 
-        public static Host Create( AverageRating averageRating, UserId userId)
+        public static Host Create(HostId hostId,AverageRating averageRating, UserId userId)
         {
-            return new(HostId.CreateUnique(), averageRating, userId);
+            return new(hostId, averageRating, userId);
         }
     }
 }

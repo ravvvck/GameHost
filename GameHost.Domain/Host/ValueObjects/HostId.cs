@@ -9,15 +9,15 @@ namespace GameHost.Domain.Session.ValueObjects
 {
     public sealed class HostId : ValueObject
     {
-        public Guid Value { get; set; }
-        private HostId(Guid value)
+        public string Value { get; set; }
+        private HostId(string value)
         {
             Value = value;
         }
 
-        public static HostId CreateUnique()
+        public static HostId Create(string id)
         {
-            return new(Guid.NewGuid());
+            return new(id);
         }
         protected override IEnumerable<object> GetEqualityComponents()
         {

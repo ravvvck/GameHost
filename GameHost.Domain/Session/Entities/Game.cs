@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace GameHost.Domain.Session.Entities
 {
-    public sealed class Game : Entity<HostId>
+    public sealed class Game : Entity<GameId>
     {
         public string Name { get; }
         public string Description { get; }
         public string InfoURL { get; set; }
 
-        private Game(HostId gameId, string name, string description, string infoURL) : base(gameId)
+        private Game(GameId gameId, string name, string description, string infoURL) : base(gameId)
         {
             Name = name;
             Description = description;
@@ -24,7 +24,7 @@ namespace GameHost.Domain.Session.Entities
 
         public static Game Create(string name, string description, string infoURL)
         {
-            return new(HostId.CreateUnique(), name, description, infoURL);
+            return new(GameId.CreateUnique(), name, description, infoURL);
         }
         
 
