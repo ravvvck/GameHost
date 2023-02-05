@@ -1,6 +1,5 @@
 ﻿using GameHost.Domain.Common.Models;
 using GameHost.Domain.Common.ValueObjects;
-using GameHost.Domain.Entities;
 using GameHost.Domain.Event.ValueObjects;
 using GameHost.Domain.Session.ValueObjects;
 using GameHost.Domain.User.ValueObjects;

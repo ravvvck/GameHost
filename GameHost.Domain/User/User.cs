@@ -1,5 +1,4 @@
 ﻿using GameHost.Domain.Common.Models;
-using GameHost.Domain.Entities;
 using GameHost.Domain.User.ValueObjects;
 using System;
 using System.Collections.Generic;
