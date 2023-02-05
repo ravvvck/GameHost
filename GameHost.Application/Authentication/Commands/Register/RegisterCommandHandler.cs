@@ -1,7 +1,7 @@
 ﻿using GameHost.Application.Common.Authentication;
 using GameHost.Application.Common.Interfaces.Persistence;
 using GameHost.Application.Common.Interfaces.Services;
-using GameHost.Domain.Entities;
+using GameHost.Domain.User;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -28,13 +28,7 @@ namespace GameHost.Application.Authentication.Commands.Register
                 throw new Exception("User already exist");
             }
 
-            var user = new User()
-            {
-                FirstName = command.FirstName,
-                LastName = command.LastName,
-                Email = command.Email,
-                Password = command.Password
-            };
+            var user = User.Create(command.FirstName, command.LastName, command.Email, command.Password);
 
             userRepository.Add(user);
             Guid userId = Guid.NewGuid();

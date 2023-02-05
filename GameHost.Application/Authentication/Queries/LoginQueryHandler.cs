@@ -1,7 +1,7 @@
 ﻿using GameHost.Application.Common.Authentication;
 using GameHost.Application.Common.Interfaces.Persistence;
 using GameHost.Application.Common.Interfaces.Services;
-using GameHost.Domain.Entities;
+using GameHost.Domain.User;
 using MediatR;
 using System;
 using System.Collections.Generic;
