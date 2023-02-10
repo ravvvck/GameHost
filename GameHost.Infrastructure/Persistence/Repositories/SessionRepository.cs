@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameHost.Infrastructure.Persistence
+namespace GameHost.Infrastructure.Persistence.Repositories
 {
     public class SessionRepository : ISessionRepository
     {
@@ -18,6 +18,6 @@ namespace GameHost.Infrastructure.Persistence
             _sessions.Add(session);
         }
 
-        
+
     }
 }

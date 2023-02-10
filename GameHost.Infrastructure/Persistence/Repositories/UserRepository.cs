@@ -7,12 +7,12 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameHost.Infrastructure.Persistence
+namespace GameHost.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
-        
+
     {
-        private readonly static List<User> Users = new ();
+        private readonly static List<User> Users = new();
         public void Add(User user)
         {
             Users.Add(user);
@@ -20,7 +20,7 @@ namespace GameHost.Infrastructure.Persistence
 
         public User? GetUserByEmail(string email)
         {
-           return  Users.SingleOrDefault(u => u.Email == email);
+            return Users.SingleOrDefault(u => u.Email == email);
         }
     }
 }

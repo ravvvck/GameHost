@@ -3,6 +3,7 @@ using GameHost.Application.Common.Interfaces.Persistence;
 using GameHost.Application.Common.Interfaces.Services;
 using GameHost.Infrastructure.Authentication;
 using GameHost.Infrastructure.Persistence;
+using GameHost.Infrastructure.Persistence.Repositories;
 using GameHost.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace GameHost.Infrastructure
             services.AddScoped<ISessionRepository, SessionRepository>();
 
 
-            //services.AddDbContext<GameHostDbContext>(options => options.UseSqlServer());
+            services.AddDbContext<GameHostDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("GameHostDatabase")));
 
             configuration.Bind(JwtSettings.SectionName, jwtSettings);
             services.AddSingleton(Options.Create(jwtSettings));
