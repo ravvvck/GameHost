@@ -10,9 +10,10 @@ namespace GameHost.Domain.Session.Entities
 {
     public sealed class Game : Entity<GameId>
     {
-        public string Name { get; }
-        public string Description { get; }
-        public string InfoURL { get; set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public string InfoURL { get; private set; }
+        
 
         private Game(GameId gameId, string name, string description, string infoURL) : base(gameId)
         {
@@ -25,6 +26,11 @@ namespace GameHost.Domain.Session.Entities
         public static Game Create(string name, string description, string infoURL)
         {
             return new(GameId.CreateUnique(), name, description, infoURL);
+        }
+
+        private Game()
+        {
+
         }
         
 

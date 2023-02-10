@@ -13,6 +13,11 @@ namespace GameHost.Domain.Common.Models
         {
 
         }
+
+        protected AggregateRoot()
+        {
+
+        }
                 
     }
 }

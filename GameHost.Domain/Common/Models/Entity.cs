@@ -40,5 +40,10 @@ namespace GameHost.Domain.Common.Models
         {
             return Id.GetHashCode();
         }
+
+        protected Entity()
+        {
+
+        }
     }
 }

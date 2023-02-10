@@ -19,6 +19,11 @@ namespace GameHost.Domain.Session.ValueObjects
         {
             return new(Guid.NewGuid());
         }
+
+        public static SessionId Create(Guid value)
+        {
+            return new SessionId(value);
+        }
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
