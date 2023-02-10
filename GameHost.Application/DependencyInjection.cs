@@ -12,6 +12,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using GameHost.Domain.User;
 
 namespace GameHost.Application
 {
@@ -22,6 +24,8 @@ namespace GameHost.Application
             services.AddMediatR(typeof(DependencyInjection).Assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
             return services;
         }
 

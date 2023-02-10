@@ -1,8 +1,10 @@
 ﻿using GameHost.Application.Common.Authentication;
 using GameHost.Application.Common.Interfaces.Persistence;
 using GameHost.Application.Common.Interfaces.Services;
+using GameHost.Application.Exceptions;
 using GameHost.Domain.User;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,23 +17,25 @@ namespace GameHost.Application.Authentication.Queries
     {
         private readonly IJwtTokenGenerator jwtTokenGenerator;
         private readonly IUserRepository userRepository;
+        private readonly IPasswordHasher<User> passwordHasher;
 
-        public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+        public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
         {
             this.jwtTokenGenerator = jwtTokenGenerator;
             this.userRepository = userRepository;
+            this.passwordHasher = passwordHasher;
         }
         public async Task<AuthenticationResult> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             if (userRepository.GetUserByEmail(request.Email) is not User user)
             {
-                throw new Exception("User does not exist");
+                throw new BadRequestException("User does not exist");
             }
 
-            if (user.Password != request.Password)
+            var result = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
+            if (result == PasswordVerificationResult.Failed)
             {
-                throw new Exception("Invalid password");
-
+                throw new NotFoundException("Invalid username or password");
             }
 
             var token = jwtTokenGenerator.GenerateToken(user);

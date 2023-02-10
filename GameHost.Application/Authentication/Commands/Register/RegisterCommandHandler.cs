@@ -3,6 +3,7 @@ using GameHost.Application.Common.Interfaces.Persistence;
 using GameHost.Application.Common.Interfaces.Services;
 using GameHost.Domain.User;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,13 @@ namespace GameHost.Application.Authentication.Commands.Register
     {
         private readonly IJwtTokenGenerator jwtTokenGenerator;
         private readonly IUserRepository userRepository;
+        private readonly IPasswordHasher<User> passwordHasher;
 
-        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
         {
             this.jwtTokenGenerator = jwtTokenGenerator;
             this.userRepository = userRepository;
+            this.passwordHasher = passwordHasher;
         }
         public async Task<AuthenticationResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
@@ -27,9 +30,10 @@ namespace GameHost.Application.Authentication.Commands.Register
             {
                 throw new Exception("User already exist");
             }
-
+            
             var user = User.Create(command.FirstName, command.LastName, command.Email, command.Password);
-
+            var hashedPassword = passwordHasher.HashPassword(user,command.Password);
+            user.PasswordHash= hashedPassword;
             userRepository.Add(user);
             Guid userId = Guid.NewGuid();
             var token = jwtTokenGenerator.GenerateToken(user);
