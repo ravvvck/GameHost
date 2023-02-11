@@ -1,4 +1,4 @@
-﻿using GameHost.Domain.Session;
+﻿using GameHost.Domain.Sessions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

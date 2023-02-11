@@ -1,7 +1,8 @@
 ﻿using GameHost.Domain.Common.Models;
 using GameHost.Domain.Common.ValueObjects;
-using GameHost.Domain.Session.ValueObjects;
-using GameHost.Domain.User.ValueObjects;
+using GameHost.Domain.Hosts.ValueObjects;
+using GameHost.Domain.Sessions.ValueObjects;
+using GameHost.Domain.Users.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

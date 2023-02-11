@@ -3,6 +3,7 @@ using GameHost.Application.Common.Interfaces.Persistence;
 using GameHost.Application.Common.Interfaces.Services;
 using GameHost.Application.Exceptions;
 using GameHost.Domain.User;
+using GameHost.Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;

@@ -1,5 +1,5 @@
 ﻿using GameHost.Domain.Common.ValueObjects;
-using GameHost.Domain.Session.Entities;
+using GameHost.Domain.Sessions.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

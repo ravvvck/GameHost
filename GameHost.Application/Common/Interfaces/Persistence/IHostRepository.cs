@@ -1,5 +1,4 @@
-﻿using GameHost.Domain.User;
-using GameHost.Domain.Users;
+﻿using GameHost.Domain.Hosts;
 using GameHost.Domain.Users.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -9,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace GameHost.Application.Common.Interfaces.Persistence
 {
-    public interface IUserRepository
+    public interface IHostRepository
     {
-        User? GetUserByEmail(string email);
-        User? GetUserByUserId(UserId userId);
-        void Register(User user);
-
+        Host Add(Host host);
+        Host FindByUserId(UserId userId);
+        Host FindByUserIdOrCreate(UserId userId);
     }
 }

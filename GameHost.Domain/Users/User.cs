@@ -1,12 +1,12 @@
 ﻿using GameHost.Domain.Common.Models;
-using GameHost.Domain.User.ValueObjects;
+using GameHost.Domain.Users.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameHost.Domain.User
+namespace GameHost.Domain.Users
 {
     public sealed class User : AggregateRoot<UserId>
     {
@@ -16,6 +16,10 @@ namespace GameHost.Domain.User
         public string PasswordHash { get; set; }
         public DateTime CreatedDateTime { get; }
         public DateTime UpdatedDateTime { get; }
+        private User()
+        {
+
+        }
 
         private User(UserId userId, string firstName, string lastName, string email, string password, DateTime createdDateTime, DateTime updatedDateTime)
         : base(userId)

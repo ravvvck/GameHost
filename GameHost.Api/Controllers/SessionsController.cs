@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using GameHost.Application.Sessions.Commands.CreateSession;
 using GameHost.Contracts.Sessions;
+using GameHost.Domain.Users.ValueObjects;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GameHost.Api.Controllers
 {
@@ -21,10 +24,12 @@ namespace GameHost.Api.Controllers
 
         [Authorize]
         [HttpPost()]
-        public async Task<IActionResult> CreateEvent( CreateSessionCommand command)
+        public async Task<IActionResult> CreateEvent(CreateSessionRequest request)
         {
 
-            var command = mapper.Map<CreateSessionCommand>((request, hostId));
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var command = mapper.Map<CreateSessionCommand>((request, userId));
+            
             await mediator.Send(command);
             return Ok(command);
         }

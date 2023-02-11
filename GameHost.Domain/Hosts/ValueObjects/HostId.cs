@@ -1,26 +1,29 @@
 ﻿using GameHost.Domain.Common.Models;
+using GameHost.Domain.Users.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameHost.Domain.User.ValueObjects
+namespace GameHost.Domain.Hosts.ValueObjects
 {
-    public sealed class UserRatingId : ValueObject
+    public sealed class HostId : ValueObject
     {
-        public Guid Value { get; }
-
-        private UserRatingId(Guid value)
+        public Guid Value { get; set; }
+        private HostId(Guid value)
         {
             Value = value;
         }
 
-        public static UserRatingId CreateUnique()
+        public static HostId CreateUnique()
         {
             return new(Guid.NewGuid());
         }
-
+        public static HostId Create(Guid value)
+        {
+            return new HostId(value);
+        }
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;

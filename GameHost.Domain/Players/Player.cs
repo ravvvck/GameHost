@@ -3,12 +3,8 @@ using GameHost.Domain.Common.ValueObjects;
 using GameHost.Domain.Player.ValueObjects;
 using GameHost.Domain.SessionReview.ValueObjects;
 using GameHost.Domain.User.Entity;
-using GameHost.Domain.User.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GameHost.Domain.Users.ValueObjects;
+
 
 namespace GameHost.Domain.Player
 {

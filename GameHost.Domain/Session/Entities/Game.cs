@@ -1,12 +1,12 @@
 ﻿using GameHost.Domain.Common.Models;
-using GameHost.Domain.Session.ValueObjects;
+using GameHost.Domain.Sessions.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameHost.Domain.Session.Entities
+namespace GameHost.Domain.Sessions.Entities
 {
     public sealed class Game : Entity<GameId>
     {

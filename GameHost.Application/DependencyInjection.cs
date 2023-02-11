@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using GameHost.Domain.User;
+using GameHost.Domain.Users;
 
 namespace GameHost.Application
 {

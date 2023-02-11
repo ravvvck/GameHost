@@ -1,7 +1,7 @@
 ﻿using GameHost.Application.Common.Authentication;
 using GameHost.Application.Common.Interfaces.Persistence;
 using GameHost.Application.Common.Interfaces.Services;
-using GameHost.Domain.User;
+using GameHost.Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -34,7 +34,7 @@ namespace GameHost.Application.Authentication.Commands.Register
             var user = User.Create(command.FirstName, command.LastName, command.Email, command.Password);
             var hashedPassword = passwordHasher.HashPassword(user,command.Password);
             user.PasswordHash= hashedPassword;
-            userRepository.Add(user);
+            userRepository.Register(user);
             Guid userId = Guid.NewGuid();
             var token = jwtTokenGenerator.GenerateToken(user);
 

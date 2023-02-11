@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameHost.Infrastructure.Migrations
 {
     [DbContext(typeof(GameHostDbContext))]
-    [Migration("20230205181551_innit")]
-    partial class innit
+    [Migration("20230210143225_in")]
+    partial class @in
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,22 @@ namespace GameHost.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GameHost.Domain.Session.Session", b =>
+            modelBuilder.Entity("GameHost.Domain.Hosts.Host", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Hosts", (string)null);
+                });
+
+            modelBuilder.Entity("GameHost.Domain.Sessions.Session", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -41,9 +56,8 @@ namespace GameHost.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("HostId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("HostId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -52,11 +66,58 @@ namespace GameHost.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HostId");
+
                     b.ToTable("Sessions", (string)null);
                 });
 
-            modelBuilder.Entity("GameHost.Domain.Session.Session", b =>
+            modelBuilder.Entity("GameHost.Domain.Users.User", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("GameHost.Domain.Hosts.Host", b =>
+                {
+                    b.HasOne("GameHost.Domain.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("GameHost.Domain.Sessions.Session", b =>
+                {
+                    b.HasOne("GameHost.Domain.Hosts.Host", "Host")
+                        .WithMany("Sessions")
+                        .HasForeignKey("HostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("GameHost.Domain.Common.ValueObjects.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("SessionId")
@@ -86,7 +147,7 @@ namespace GameHost.Infrastructure.Migrations
                                 .HasForeignKey("SessionId");
                         });
 
-                    b.OwnsMany("GameHost.Domain.Session.Entities.Game", "Games", b1 =>
+                    b.OwnsMany("GameHost.Domain.Sessions.Entities.Game", "Games", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uniqueidentifier");
@@ -123,6 +184,13 @@ namespace GameHost.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Games");
+
+                    b.Navigation("Host");
+                });
+
+            modelBuilder.Entity("GameHost.Domain.Hosts.Host", b =>
+                {
+                    b.Navigation("Sessions");
                 });
 #pragma warning restore 612, 618
         }

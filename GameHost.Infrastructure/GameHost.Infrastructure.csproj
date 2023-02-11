@@ -25,4 +25,8 @@
     <ProjectReference Include="..\GameHost.Application\GameHost.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

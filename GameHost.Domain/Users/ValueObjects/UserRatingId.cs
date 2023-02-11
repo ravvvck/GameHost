@@ -5,20 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameHost.Domain.Session.ValueObjects
+namespace GameHost.Domain.Users.ValueObjects
 {
-    public sealed class HostId : ValueObject
+    public sealed class UserRatingId : ValueObject
     {
-        public string Value { get; set; }
-        private HostId(string value)
+        public Guid Value { get; }
+
+        private UserRatingId(Guid value)
         {
             Value = value;
         }
 
-        public static HostId Create(string id)
+        public static UserRatingId CreateUnique()
         {
-            return new(id);
+            return new(Guid.NewGuid());
         }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Value;
