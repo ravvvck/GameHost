@@ -1,5 +1,5 @@
 ﻿using GameHost.Application.Common.Interfaces.Persistence;
-using GameHost.Domain.Session;
+using GameHost.Domain.Sessions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,11 +11,17 @@ namespace GameHost.Infrastructure.Persistence.Repositories
 {
     public class SessionRepository : ISessionRepository
     {
+        public SessionRepository(GameHostDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
 
-        private readonly List<Session> _sessions = new();
+        private readonly GameHostDbContext dbContext;
+
         public void Add(Session session)
         {
-            _sessions.Add(session);
+            dbContext.Sessions.Add(session);    
+            dbContext.SaveChanges();
         }
 
 

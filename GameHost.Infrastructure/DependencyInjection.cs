@@ -28,7 +28,7 @@ namespace GameHost.Infrastructure
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISessionRepository, SessionRepository>();
-
+            services.AddScoped<IHostRepository, HostRepository>();
 
             services.AddDbContext<GameHostDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("GameHostDatabase")));
 
