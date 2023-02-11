@@ -19,9 +19,9 @@ namespace GameHost.Api.Controllers
             this.mediator = mediator;
         }
 
-
-        [HttpPost("host/{hostId}")]
-        public async Task<IActionResult> CreateEvent( CreateSessionRequest request, string hostId)
+        [Authorize]
+        [HttpPost()]
+        public async Task<IActionResult> CreateEvent( CreateSessionCommand command)
         {
 
             var command = mapper.Map<CreateSessionCommand>((request, hostId));

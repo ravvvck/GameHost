@@ -1,12 +1,15 @@
-﻿using GameHost.Domain.Session;
-using GameHost.Domain.Session.Entities;
-using GameHost.Domain.Session.ValueObjects;
+﻿using GameHost.Domain.Hosts;
+using GameHost.Domain.Hosts.ValueObjects;
+using GameHost.Domain.Sessions;
+using GameHost.Domain.Sessions.Entities;
+using GameHost.Domain.Sessions.ValueObjects;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +22,8 @@ namespace GameHost.Infrastructure.Persistence.Configurations
             ConfigureSessionTable(builder);
             ConfigureGameTable(builder);
         }
+
+        
 
         private void ConfigureGameTable(EntityTypeBuilder<Session> builder)
         {
@@ -45,6 +50,7 @@ namespace GameHost.Infrastructure.Persistence.Configurations
         {
             builder.ToTable("Sessions");
             builder.HasKey(t => t.Id);
+
             builder.Property(t => t.Id)
                 .ValueGeneratedNever()
                 .HasConversion(id => id.Value,
@@ -55,10 +61,8 @@ namespace GameHost.Infrastructure.Persistence.Configurations
                 .HasMaxLength(100);
             builder.Property(t => t.Description)
                 .HasMaxLength(100);
+
             
-            builder.Property(t => t.HostId)
-                 .HasConversion(id => id.Value,
-                value => HostId.Create(value));
         }
 
        
