@@ -1,8 +1,11 @@
 ﻿using GameHost.Application.Common.Interfaces.Persistence;
-using GameHost.Domain.Session;
-using GameHost.Domain.Session.Entities;
-using GameHost.Domain.Session.ValueObjects;
+using GameHost.Domain.Hosts;
+using GameHost.Domain.Hosts.ValueObjects;
+using GameHost.Domain.Sessions;
+using GameHost.Domain.Sessions.Entities;
+using GameHost.Domain.Sessions.ValueObjects;
 using MediatR;
+using Microsoft.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +17,21 @@ namespace GameHost.Application.Sessions.Commands.CreateSession
     public class CreateSessionCommandHandler : IRequestHandler<CreateSessionCommand, Session>
     {
         private readonly ISessionRepository sessionRepository;
+        private readonly IHostRepository hostRepository;
+        private readonly IUserRepository userRepository;
 
-        public CreateSessionCommandHandler(ISessionRepository sessionRepository)
+        public CreateSessionCommandHandler(ISessionRepository sessionRepository, IHostRepository hostRepository, IUserRepository userRepository)
         {
             this.sessionRepository = sessionRepository;
+            this.hostRepository = hostRepository;
+            this.userRepository = userRepository;
         }
         public async Task<Session> Handle(CreateSessionCommand request, CancellationToken cancellationToken)
         {
+            Host host = hostRepository.FindByUserIdOrCreate(request.UserId);
+
             var session = Session.Create(
-                hostId: HostId.Create(request.HostId),
+                host: host,
                 name: request.Name,
                 description: request.Description,
                 address: request.Address,

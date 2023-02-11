@@ -1,5 +1,7 @@
 ﻿using GameHost.Domain.Common.ValueObjects;
-using GameHost.Domain.Session;
+using GameHost.Domain.Hosts;
+using GameHost.Domain.Sessions;
+using GameHost.Domain.Users.ValueObjects;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace GameHost.Application.Sessions.Commands.CreateSession
 {
     public class CreateSessionCommand : IRequest<Session>
         {
-        public string HostId { get; set; }
+    public UserId UserId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public Address Address { get; set; }
