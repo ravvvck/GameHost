@@ -1,7 +1,6 @@
 ﻿using GameHost.Domain.Common.Models;
 using GameHost.Domain.Common.ValueObjects;
 using GameHost.Domain.Hosts.ValueObjects;
-using GameHost.Domain.Player.ValueObjects;
 using GameHost.Domain.Sessions.ValueObjects;
 using GameHost.Domain.SessionReview.ValueObjects;
 using System;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameHost.Domain.Session.ValueObjects;
 
 namespace GameHost.Domain.SessionReview
 {

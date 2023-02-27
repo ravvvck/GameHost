@@ -36,6 +36,8 @@ namespace GameHost.Domain.Sessions
             return new(SessionId.CreateUnique(), host, name, description, address, date, games);
         }
 
+        
+
         private Session()
         {
 

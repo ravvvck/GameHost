@@ -28,5 +28,9 @@ namespace GameHost.Domain.Sessions.ValueObjects
         {
             yield return Value;
         }
+        public SessionId()
+        {
+
+        }
     }
 }

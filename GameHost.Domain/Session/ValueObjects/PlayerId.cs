@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameHost.Domain.Player.ValueObjects
+namespace GameHost.Domain.Session.ValueObjects
 {
     public sealed class PlayerId : ValueObject
     {
