@@ -19,8 +19,4 @@
     <ProjectReference Include="..\GameHost.Domain\GameHost.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Sessions\Queries\" />
-  </ItemGroup>
-
 </Project>
