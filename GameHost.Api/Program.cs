@@ -1,7 +1,9 @@
 using GameHost.Api;
 using GameHost.Api.Middleware;
 using GameHost.Application;
+using GameHost.Application.Authorization;
 using GameHost.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 {

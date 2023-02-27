@@ -11,7 +11,11 @@ namespace GameHost.Api.Mapping
     {
         public SessionMappingConfig()
         {
-            CreateMap<Session, SessionResponse>();
+            CreateMap<Session, SessionResponse>()
+                .ForMember(dest => dest.HostId, s => s.MapFrom(src => src.Host.Id.Value))
+                .ForMember(dest => dest.SessionId, s => s.MapFrom(src => src.Id));
+            CreateMap<GameHost.Domain.Sessions.Entities.Game, GameResponse>()
+                .ForMember(dest => dest.GameId, s => s.MapFrom(src => src.Id));
             CreateMap<Game, GameCommand>();
             CreateMap<(CreateSessionRequest request,Guid userId), CreateSessionCommand>()
             //.ForAllMembers(r => r.MapFrom(src => src.request)); 
@@ -23,7 +27,6 @@ namespace GameHost.Api.Mapping
             .ForMember(dest => dest.Date, r => r.MapFrom(src => src.request.Date));
 
 
-            CreateMap<Session, SessionResponse>();
            
 
         }

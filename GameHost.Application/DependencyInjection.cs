@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using GameHost.Domain.User;
 using GameHost.Domain.Users;
+using GameHost.Application.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace GameHost.Application
 {
@@ -26,6 +29,8 @@ namespace GameHost.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IAuthorizationHandler, UserIsHostRequirementHandler>();
+            services.AddHttpContextAccessor();
 
             return services;
         }

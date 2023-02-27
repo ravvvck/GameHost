@@ -30,7 +30,9 @@ namespace GameHost.Infrastructure
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddScoped<IHostRepository, HostRepository>();
 
-            services.AddDbContext<GameHostDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("GameHostDatabase")));
+            services.AddDbContext<GameHostDbContext>(options =>
+            //options.UseSqlServer(configuration.GetConnectionString("GameHostDatabase")))
+            options.UseSqlite(configuration.GetConnectionString("SqlLite")));
 
             configuration.Bind(JwtSettings.SectionName, jwtSettings);
             services.AddSingleton(Options.Create(jwtSettings));

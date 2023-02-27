@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GameHost.Application.Exceptions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -20,6 +21,20 @@ namespace GameHost.Api.Middleware
             try
             {
                 await requestDelegate(context);
+            }
+            catch (ForbidException forbidException)
+            {
+                context.Response.StatusCode = 403;
+            }
+            catch (BadRequestException badRequestException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(badRequestException.Message);
+            }
+            catch (NotFoundException notFoundException)
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync(notFoundException.Message);
             }
 
             catch (Exception ex)
