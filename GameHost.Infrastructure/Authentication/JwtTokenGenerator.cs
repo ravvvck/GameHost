@@ -44,7 +44,7 @@ namespace GameHost.Infrastructure.Authentication
             var securityToken = new JwtSecurityToken(
                 issuer: jwtSettings.Issuer,
                 audience: jwtSettings.Audience,
-                expires: dateTimeProvider.UtcNow.AddMinutes(jwtSettings.ExpiryMinutes),
+                expires: dateTimeProvider.UtcNow.AddDays(jwtSettings.ExpiryDays),
                 claims: claims,
                 signingCredentials: signingCredentials);
 
