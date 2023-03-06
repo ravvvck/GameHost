@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Players\ValueObjects\" />
+    <Compile Remove="Players\**" />
+    <EmbeddedResource Remove="Players\**" />
+    <None Remove="Players\**" />
   </ItemGroup>
 
 </Project>

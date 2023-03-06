@@ -35,7 +35,7 @@ namespace GameHost.Api.Controllers
         public async Task<IActionResult> Login(LoginRequest loginRequest )
         {
             var query = _mapper.Map<LoginQuery>(loginRequest);
-            var authResult = await _mediator.Send(query); //dziala
+            var authResult = await _mediator.Send(query); 
             var response = _mapper.Map<AuthenticationResponse>(authResult);
             return Ok(response);
         }

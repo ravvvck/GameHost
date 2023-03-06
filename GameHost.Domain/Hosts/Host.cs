@@ -17,15 +17,15 @@ namespace GameHost.Domain.Hosts
 {
     public sealed class Host : AggregateRoot<HostId>
     {
-        private readonly List<Session>? _sessions = new();
-        public IReadOnlyList<Session>? Sessions => _sessions;
+        private readonly List<GameHost.Domain.Sessions.Session>? _sessions = new();
+        public IReadOnlyList<GameHost.Domain.Sessions.Session>? Sessions => _sessions;
         public GameHost.Domain.Users.User User { get; private set; }
         private Host()
         {
 
         }
 
-        private Host(HostId hostId, GameHost.Domain.Users.User user, List<Session> sessions)
+        private Host(HostId hostId, GameHost.Domain.Users.User user, List<GameHost.Domain.Sessions.Session> sessions)
         : base(hostId)
         {
 
@@ -36,7 +36,7 @@ namespace GameHost.Domain.Hosts
 
         public static Host Create(GameHost.Domain.Users.User user)
         {
-            return new(HostId.CreateUnique(), user, new List <Session>());
+            return new(HostId.CreateUnique(), user, new List <GameHost.Domain.Sessions.Session>());
         }
     }
 }

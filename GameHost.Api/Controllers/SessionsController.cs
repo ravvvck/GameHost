@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using GameHost.Application.Sessions.Commands.AddPlayer;
 using GameHost.Application.Sessions.Commands.CreateSession;
+using GameHost.Application.Sessions.Commands.DeletePlayer;
 using GameHost.Application.Sessions.Commands.DeleteSession;
 using GameHost.Application.Sessions.Queries;
 using GameHost.Contracts.Sessions;
@@ -12,6 +14,7 @@ using System.Security.Claims;
 
 namespace GameHost.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("sessions")]
     public class SessionController : ControllerBase
@@ -25,7 +28,7 @@ namespace GameHost.Api.Controllers
             this.mediator = mediator;
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpPost()]
         public async Task<IActionResult> Create(CreateSessionRequest request)
         {
@@ -49,7 +52,28 @@ namespace GameHost.Api.Controllers
             await mediator.Send(deleteSessionCommand);
             return NoContent();
         }
+       
+        [HttpPost("players")]
+        public async Task<IActionResult> AddPlayer(AddPlayerToSessionRequest request)
+        {
 
-        
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            
+            var command = mapper.Map<AddPlayerCommand>((request, userId));
+            await mediator.Send(command);
+            return Ok(command);
+        }
+
+        [HttpDelete("players")]
+        public async Task<IActionResult> DeletePlayer(DeletePlayerFromSessionRequest request)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var command = mapper.Map<DeletePlayerCommand>((request, userId));
+            await mediator.Send(command);
+            return Ok(command);
+        }
+
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GameHost.Domain.Hosts;
 using GameHost.Domain.Hosts.ValueObjects;
+using GameHost.Domain.Session.ValueObjects;
 using GameHost.Domain.Sessions;
 using GameHost.Domain.Sessions.Entities;
 using GameHost.Domain.Sessions.ValueObjects;
@@ -21,9 +22,24 @@ namespace GameHost.Infrastructure.Persistence.Configurations
         {
             ConfigureSessionTable(builder);
             ConfigureGameTable(builder);
+            ConfigurePlayerTable(builder);
         }
 
-        
+        private void ConfigurePlayerTable(EntityTypeBuilder<Session> builder)
+        {
+            builder.OwnsMany(m => m.Players, sb =>
+            {
+                sb.ToTable("Players");
+                sb.WithOwner().HasForeignKey("SessionId");
+                sb.HasKey("Id", "SessionId");
+
+                sb.Property(t => t.Id)
+                .ValueGeneratedNever()
+                .HasConversion(id => id.Value,
+                value => PlayerId.Create(value));
+                
+            });
+        }
 
         private void ConfigureGameTable(EntityTypeBuilder<Session> builder)
         {

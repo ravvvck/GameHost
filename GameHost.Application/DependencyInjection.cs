@@ -13,7 +13,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using GameHost.Domain.User;
+
 using GameHost.Domain.Users;
 using GameHost.Application.Authorization;
 using Microsoft.AspNetCore.Authorization;

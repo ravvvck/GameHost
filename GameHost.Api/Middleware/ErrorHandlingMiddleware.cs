@@ -1,4 +1,5 @@
 ﻿using GameHost.Application.Exceptions;
+using GameHost.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -7,53 +8,78 @@ using System.Text.Json;
 
 namespace GameHost.Api.Middleware
 {
-    public class ErrorHandlingMiddleware
+    public class ErrorHandlingMiddleware 
     {
-        private readonly RequestDelegate requestDelegate;
+        //public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        //{
+        //    try
+        //    {
+        //        await next(context);
+        //    }
+        //    catch (UserIsAlreadyAttendingSessionException ex)
+        //    {
+        //        context.Response.StatusCode = 400;
+        //        await context.Response.WriteAsync(ex.Message);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        context.Response.StatusCode = 500;
+        //        await context.Response.WriteAsync("Something went wrong.");
+        //    }
+        //}
 
-        public ErrorHandlingMiddleware(RequestDelegate requestDelegate)
-        {
-            this.requestDelegate = requestDelegate;
-        }
+        
+            private readonly RequestDelegate requestDelegate;
 
-        public async Task Invoke(HttpContext context)
-        {
-            try
+            public ErrorHandlingMiddleware(RequestDelegate requestDelegate)
             {
-                await requestDelegate(context);
-            }
-            catch (ForbidException forbidException)
-            {
-                context.Response.StatusCode = 403;
-            }
-            catch (BadRequestException badRequestException)
-            {
-                context.Response.StatusCode = 400;
-                await context.Response.WriteAsync(badRequestException.Message);
-            }
-            catch (NotFoundException notFoundException)
-            {
-                context.Response.StatusCode = 404;
-                await context.Response.WriteAsync(notFoundException.Message);
+                this.requestDelegate = requestDelegate;
             }
 
-            catch (Exception ex)
+            public async Task Invoke(HttpContext context)
             {
-                await HandleExceptionAsync(context, ex);
-            }
-        }
+                try
+                {
+                    await requestDelegate(context);
+                }
+                catch (ForbidException forbidException)
+                {
+                    context.Response.StatusCode = 403;
+                }
+                catch (DomainException domainException)
+                {
+                    context.Response.StatusCode = 400;
+                    await context.Response.WriteAsync(domainException.Message);
+                }
+               
+                catch (NotFoundException notFoundException)
+                {
+                    context.Response.StatusCode = 404;
+                    await context.Response.WriteAsync(notFoundException.Message);
+                }
 
-        public static Task HandleExceptionAsync(HttpContext context, Exception ex)
-        {
-            var code = HttpStatusCode.InternalServerError;
-            var result = JsonSerializer.Serialize(new { error = ex.Message });
-            context.Response.ContentType= "application/json";
-            context.Response.StatusCode = (int)code;
-            return context.Response.WriteAsync(result);
+                //catch (Exception ex)
+                //{
+                //    await HandleExceptionAsync(context, ex);
+                //}
+                catch (Exception e)
+                {
+                    context.Response.StatusCode = 500;
+                    await context.Response.WriteAsync("Something went wrong.");
+                }
+            }
+
+            public static Task HandleExceptionAsync(HttpContext context, Exception ex)
+            {
+                var code = HttpStatusCode.InternalServerError;
+                var result = JsonSerializer.Serialize(new { error = ex.Message });
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = (int)code;
+                return context.Response.WriteAsync(result);
+            }
+
+
         }
 
 
     }
-
-
-}

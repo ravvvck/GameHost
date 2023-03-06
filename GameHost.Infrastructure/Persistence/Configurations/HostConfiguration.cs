@@ -2,7 +2,7 @@
 using GameHost.Domain.Hosts.ValueObjects;
 using GameHost.Domain.Sessions;
 using GameHost.Domain.Sessions.ValueObjects;
-using GameHost.Domain.User;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

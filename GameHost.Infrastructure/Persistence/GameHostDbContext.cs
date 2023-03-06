@@ -1,4 +1,5 @@
 ﻿using GameHost.Domain.Hosts;
+using GameHost.Domain.Session.Entities;
 using GameHost.Domain.Sessions;
 using GameHost.Domain.Sessions.Entities;
 using GameHost.Domain.Users;
@@ -17,6 +18,7 @@ namespace GameHost.Infrastructure.Persistence
         public DbSet<Host> Hosts { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Player> Players { get; set; }
         public GameHostDbContext(DbContextOptions<GameHostDbContext> options) : base(options)
         {
 

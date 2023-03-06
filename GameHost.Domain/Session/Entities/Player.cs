@@ -4,7 +4,7 @@ using GameHost.Domain.Session.ValueObjects;
 using GameHost.Domain.SessionReview.ValueObjects;
 using GameHost.Domain.Sessions;
 using GameHost.Domain.Sessions.ValueObjects;
-using GameHost.Domain.User.Entity;
+
 using GameHost.Domain.Users.ValueObjects;
 
 
@@ -12,27 +12,27 @@ namespace GameHost.Domain.Session.Entities
 {
     public sealed class Player : Entity<PlayerId>
     {
-
-
-        private readonly List<SessionId> _sessionIds = new();
-        public User User { get; }
-        public Session Session { get; }
+        public GameHost.Domain.Users.User User { get; private set; }
+        public GameHost.Domain.Sessions.Session Session { get; private set; }
 
 
 
 
+        public Player()
+        {
 
-        private Player(PlayerId playerId, UserId userId, SessionId sessionId)
+        }
+        private Player(PlayerId playerId, GameHost.Domain.Users.User user, GameHost.Domain.Sessions.Session session)
         : base(playerId)
         {
 
-            UserId = userId;
-            SessionIds.Add()
+            User = user;
+            Session = session;
         }
 
-        public static Player Create(UserId userId, SessionId sessionId)
+        public static Player Create(GameHost.Domain.Users.User user, GameHost.Domain.Sessions.Session session)
         {
-            return new(PlayerId.CreateUnique(), userId, sessionId);
+            return new(PlayerId.CreateUnique(), user, session);
         }
     }
 

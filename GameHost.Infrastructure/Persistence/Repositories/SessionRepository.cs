@@ -1,7 +1,10 @@
 ﻿using GameHost.Application.Common.Interfaces.Persistence;
 using GameHost.Application.Exceptions;
+using GameHost.Domain.Session.Entities;
 using GameHost.Domain.Sessions;
 using GameHost.Domain.Sessions.ValueObjects;
+using GameHost.Domain.Users;
+using GameHost.Domain.Users.ValueObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +36,7 @@ namespace GameHost.Infrastructure.Persistence.Repositories
 
         public async Task<List<Session>> GetAll()
         {
-            var sessions = await dbContext.Sessions.Include(s => s.Host).ToListAsync();
+            var sessions = await dbContext.Sessions.Include(s => s.Host).Include(s => s.Players).ThenInclude(x => x.User).ToListAsync();
             return sessions;
         }
 
@@ -71,7 +74,27 @@ namespace GameHost.Infrastructure.Persistence.Repositories
             dbContext.Entry(oldSession).CurrentValues.SetValues(session);
             dbContext.SaveChanges();
             return session;
-
         }
+
+        //public async void AddPlayer(Session session, User user)
+        //{
+            
+            
+        //    dbContext.Entry(session).CurrentValues.SetValues(session);
+        //    await dbContext.SaveChangesAsync();
+        //}
+
+        //public async void DeletePlayer(Session session, UserId userId)
+        //{
+        //    var user = dbContext.Users.FirstOrDefaultAsync(u => u.Id== userId);
+        //    if (user == null)
+        //    {
+        //        throw new NotFoundException("User not found");
+        //    }
+            
+        //    session.DeletePlayer(user.Result);
+        //    dbContext.Entry(session).CurrentValues.SetValues(session);
+        //    await dbContext.SaveChangesAsync();
+        //}
     }
 }

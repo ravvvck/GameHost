@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameHost.Domain.User.Entity
+namespace GameHost.Domain.Users.Entity
 {
     public sealed class UserRating : Entity<UserRatingId>
     {

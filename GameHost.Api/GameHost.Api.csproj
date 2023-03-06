@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GameHost.Application\GameHost.Application.csproj" />
     <ProjectReference Include="..\GameHost.Contracts\GameHost.Contracts.csproj" />
+    <ProjectReference Include="..\GameHost.Domain\GameHost.Domain.csproj" />
     <ProjectReference Include="..\GameHost.Infrastructure\GameHost.Infrastructure.csproj" />
   </ItemGroup>
 
