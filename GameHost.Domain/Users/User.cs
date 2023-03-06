@@ -2,6 +2,7 @@
 using GameHost.Domain.Users.ValueObjects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace GameHost.Domain.Users
         public string PasswordHash { get; set; }
         public DateTime CreatedDateTime { get; }
         public DateTime UpdatedDateTime { get; }
+        public string RefreshToken { get; set; } = string.Empty;
+        public DateTime RefreshTokenCreated { get; set; }
+        public DateTime RefreshTokenExpires { get; set; }
         private User()
         {
 
@@ -35,6 +39,13 @@ namespace GameHost.Domain.Users
         public static User Create(string firstName, string lastName, string email, string password)
         {
             return new(UserId.CreateUnique(), firstName, lastName, email, password, DateTime.UtcNow, DateTime.UtcNow);
+        }
+
+        public void UpdateRefreshToken(RefreshToken refreshToken)
+        {
+            this.RefreshToken = refreshToken.Token;
+            this.RefreshTokenCreated = refreshToken.Created;
+            this.RefreshTokenExpires = refreshToken.Expires;
         }
     }
 

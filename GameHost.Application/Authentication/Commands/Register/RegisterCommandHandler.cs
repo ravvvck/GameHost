@@ -14,11 +14,11 @@ namespace GameHost.Application.Authentication.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthenticationResult>
     {
-        private readonly IJwtTokenGenerator jwtTokenGenerator;
+        private readonly ITokenGenerator jwtTokenGenerator;
         private readonly IUserRepository userRepository;
         private readonly IPasswordHasher<User> passwordHasher;
 
-        public RegisterCommandHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
+        public RegisterCommandHandler(ITokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
         {
             this.jwtTokenGenerator = jwtTokenGenerator;
             this.userRepository = userRepository;
@@ -37,11 +37,14 @@ namespace GameHost.Application.Authentication.Commands.Register
             userRepository.Register(user);
             Guid userId = Guid.NewGuid();
             var token = jwtTokenGenerator.GenerateToken(user);
-
+            var refreshToken = jwtTokenGenerator.GenerateRefreshToken();
+            user.UpdateRefreshToken(refreshToken);
+            userRepository.UpdateAsync(user);
 
             return new AuthenticationResult(
                    user,
-                   token);
+                   token,
+                   refreshToken);
         }
     }
     }

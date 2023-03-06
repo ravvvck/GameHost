@@ -1,5 +1,6 @@
 ﻿
 using GameHost.Domain.Users;
+using GameHost.Domain.Users.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace GameHost.Application.Common.Authentication
 {
-    public interface IJwtTokenGenerator
+    public interface ITokenGenerator
     {
         string GenerateToken(User user);
+        RefreshToken GenerateRefreshToken();
     }
 }

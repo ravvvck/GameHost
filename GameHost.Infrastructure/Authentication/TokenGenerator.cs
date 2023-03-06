@@ -2,6 +2,7 @@
 using GameHost.Application.Common.Interfaces.Services;
 
 using GameHost.Domain.Users;
+using GameHost.Domain.Users.ValueObjects;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -9,17 +10,18 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GameHost.Infrastructure.Authentication
 {
-    internal class JwtTokenGenerator : IJwtTokenGenerator
+    internal class TokenGenerator : ITokenGenerator
     {
         private readonly IDateTimeProvider dateTimeProvider;
         private readonly JwtSettings jwtSettings;
 
-        public JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtSettings> jwtSettings)
+        public TokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtSettings> jwtSettings)
         {
             this.dateTimeProvider = dateTimeProvider;
             this.jwtSettings = jwtSettings.Value;
@@ -49,6 +51,16 @@ namespace GameHost.Infrastructure.Authentication
                 signingCredentials: signingCredentials);
 
             return new JwtSecurityTokenHandler().WriteToken(securityToken);
+        }
+        public RefreshToken GenerateRefreshToken()
+        {
+            var refreshToken = new RefreshToken
+            {
+                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+                Expires = DateTime.Now.AddMinutes(1),
+                Created = DateTime.Now
+            };
+            return refreshToken;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GameHost.Application.Authentication.Commands.RefreshToken;
 using GameHost.Application.Authentication.Commands.Register;
 using GameHost.Application.Authentication.Queries;
 using GameHost.Application.Common.Interfaces.Services;
@@ -21,7 +22,10 @@ namespace GameHost.Api.Mapping
 
             CreateMap<RegisterRequest, RegisterCommand>();
             CreateMap<LoginRequest, LoginQuery>();
-            
+            CreateMap<(RefreshTokenRequest request, string token), RefreshTokenCommand>()
+                .ForMember(dst => dst.RefreshToken, r => r.MapFrom(src => src.token));
+
+
         }
     }
 }

@@ -15,11 +15,11 @@ namespace GameHost.Application.Authentication.Queries
 {
     public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationResult>
     {
-        private readonly IJwtTokenGenerator jwtTokenGenerator;
+        private readonly ITokenGenerator jwtTokenGenerator;
         private readonly IUserRepository userRepository;
         private readonly IPasswordHasher<User> passwordHasher;
 
-        public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
+        public LoginQueryHandler(ITokenGenerator jwtTokenGenerator, IUserRepository userRepository, IPasswordHasher<User> passwordHasher)
         {
             this.jwtTokenGenerator = jwtTokenGenerator;
             this.userRepository = userRepository;
@@ -39,12 +39,14 @@ namespace GameHost.Application.Authentication.Queries
             }
 
             var token = jwtTokenGenerator.GenerateToken(user);
-
-
+            var refreshToken = jwtTokenGenerator.GenerateRefreshToken();
+            user.UpdateRefreshToken(refreshToken);
+            userRepository.UpdateAsync(user);
 
             return new AuthenticationResult(
                   user,
-                  token);
+                  token,
+                  refreshToken);
         }
     }
 }
